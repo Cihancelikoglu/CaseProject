@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CaseProject.Data\CaseProject.Data.csproj" />
+    <ProjectReference Include="..\CaseProject.Entity\CaseProject.Entity.csproj" />
+    <ProjectReference Include="..\Core\CaseProject.Core.csproj" />
+  </ItemGroup>
+
+</Project>
