@@ -9,13 +9,10 @@ namespace CaseProject.Core.DataAccess
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        //Task<List<TEntity>> FindAllAsync();
-        Task<List<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> filter = null);
+        Task<List<TEntity>> FindAllAsync();
         Task<TEntity> FindByIdAsync(int id);
         Task<bool> CreateAsync(TEntity entity);
         Task<bool> UpdateAsync(TEntity entity);
         Task<bool> DeleteAsync(int id);
-        //Task<TEntity> FindByIdAsync(Expression<Func<TEntity, bool>> filter);
-
     }
 }
