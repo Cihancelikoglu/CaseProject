@@ -24,7 +24,6 @@ namespace CaseProject.Core.DataAccess.Dapper
         }
 
         public async Task<List<TEntity>> FindAllAsync()
-
         {
             DbConnection.Open();
 
@@ -68,6 +67,18 @@ namespace CaseProject.Core.DataAccess.Dapper
             finally { DbConnection.Close(); }
         }
 
+        public async Task<bool> UpdateAsync(TEntity entity)
+        {
+            DbConnection.Open();
+
+            try
+            {
+                return await DbConnection
+                    .UpdateAsync<TEntity>(entity);
+            }
+            finally { DbConnection.Close(); }
+        }
+
         public async Task<bool> DeleteAsync(int id)
         {
             DbConnection.Open();
@@ -82,18 +93,6 @@ namespace CaseProject.Core.DataAccess.Dapper
 
                 return await DbConnection
                     .DeleteAsync<TEntity>(entity);
-            }
-            finally { DbConnection.Close(); }
-        }
-
-        public async Task<bool> UpdateAsync(TEntity entity)
-        {
-            DbConnection.Open();
-
-            try
-            {
-                return await DbConnection
-                    .UpdateAsync<TEntity>(entity);
             }
             finally { DbConnection.Close(); }
         }

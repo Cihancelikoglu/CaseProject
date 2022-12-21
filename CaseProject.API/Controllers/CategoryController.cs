@@ -1,7 +1,6 @@
-﻿using CaseProject.Data.Abstract;
+﻿using CaseProject.Business.Abstract;
+using CaseProject.Data.Abstract;
 using CaseProject.Entity.Entities;
-using Dapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CaseProject.API.Controllers
@@ -10,47 +9,63 @@ namespace CaseProject.API.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly ICategoryRepository _categoryRepository;
-        public CategoryController(ICategoryRepository categoryRepository)
+        private readonly ICategoryService _categoryService;
+        public CategoryController(ICategoryService categoryService)
         {
-            _categoryRepository = categoryRepository;
+            _categoryService = categoryService;
         }
 
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
-            List<Category> getAll = await _categoryRepository.FindAllAsync();
-            return Ok(getAll);
+            var result = await _categoryService.GetAllAsync();
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("getbyid")]
         public async Task<IActionResult> Get(int id)
         {
-            Category category = await _categoryRepository.FindByIdAsync(id);
-            return Ok();
+            var result = await _categoryService.GetByIdAsync(id);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> Insert(Category category)
+        public async Task<IActionResult> Add(Category category)
         {
-            await _categoryRepository.CreateAsync(category);
-            return Ok("Ekleme Başarılı");
+            var result = await _categoryService.AddAsync(category);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
 
         [HttpPost("Delete")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _categoryRepository.DeleteAsync(id);
-            return Ok("");
+            var result = await _categoryService.DeleteAsync(id);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
 
         [HttpPost("Update")]
         public async Task<IActionResult> Update(Category category)
         {
-            Category getCategory = await _categoryRepository.FindByIdAsync(category.Id);
-            if (getCategory != null)
+            var result = await _categoryService.UpdateAsync(category);
+            if (result.IsSuccess)
             {
-                await _categoryRepository.UpdateAsync(category);
+                return Ok(result);
             }
             return Ok("");
         }

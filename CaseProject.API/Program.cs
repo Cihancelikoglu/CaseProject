@@ -1,3 +1,5 @@
+using CaseProject.Business.Abstract;
+using CaseProject.Business.Concrete;
 using CaseProject.Core.DataAccess.Dapper.Context;
 using CaseProject.Data.Abstract;
 using CaseProject.Data.Concrete;
@@ -14,7 +16,8 @@ var databaseSetting = new DatabaseSettings();
 configuration.Bind(nameof(DatabaseSettings), databaseSetting);
 builder.Services.AddSingleton(databaseSetting);
 
-builder.Services.AddSingleton<ICategoryRepository, CategoryRepository>();
+builder.Services.AddSingleton<ICategoryDal, CategoryDal>();
+builder.Services.AddSingleton<ICategoryService, CategoryManager>();
 
 var app = builder.Build();
 
