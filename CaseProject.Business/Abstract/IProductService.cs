@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace CaseProject.Business.Abstract
 {
-    public interface ICategoryService
+    public interface IProductService
     {
-        Task<IDataResult<List<Category>>> GetAllAsync();
-        Task<IDataResult<Category>> GetByIdAsync(int id);
-        Task<IResult> AddAsync(Category category);
-        Task<IResult> UpdateAsync(Category category);
+        Task<IDataResult<List<Product>>> GetAllAsync();
+        Task<IDataResult<Product>> GetByIdAsync(int id);
+        Task<IResult> AddAsync(Product product);
+        Task<IResult> UpdateAsync(Product product);
         Task<IResult> DeleteAsync(int id);
     }
 }

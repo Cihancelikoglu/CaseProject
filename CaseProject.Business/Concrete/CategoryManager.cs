@@ -1,5 +1,5 @@
 ﻿using CaseProject.Business.Abstract;
-using CaseProject.Core.Utilities;
+using CaseProject.Core.Utilities.Result;
 using CaseProject.Data.Abstract;
 using CaseProject.Entity.Entities;
 using System;

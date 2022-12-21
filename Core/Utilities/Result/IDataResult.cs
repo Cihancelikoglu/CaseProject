@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CaseProject.Core.Utilities
+namespace CaseProject.Core.Utilities.Result
 {
-    public interface IResult
+    public interface IDataResult<T> : IResult
     {
-        bool IsSuccess { get; }
-        string Message { get; }
+        T Data { get; }
     }
 }

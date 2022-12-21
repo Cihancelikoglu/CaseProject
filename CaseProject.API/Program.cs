@@ -18,6 +18,8 @@ builder.Services.AddSingleton(databaseSetting);
 
 builder.Services.AddSingleton<ICategoryDal, CategoryDal>();
 builder.Services.AddSingleton<ICategoryService, CategoryManager>();
+builder.Services.AddSingleton<IProductDal, ProductDal>();
+builder.Services.AddSingleton<IProductService, ProductManager>();
 
 var app = builder.Build();
 
