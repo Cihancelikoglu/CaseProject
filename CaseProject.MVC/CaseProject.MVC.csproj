@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Content\vendor\jquery-smartwizard\.github\FUNDING.yml" />
+    <None Include="wwwroot\Content\vendor\jquery-smartwizard\.github\ISSUE_TEMPLATE\bug_report.md" />
+    <None Include="wwwroot\Content\vendor\jquery-smartwizard\.github\ISSUE_TEMPLATE\feature_request.md" />
+    <None Include="wwwroot\Content\vendor\jquery-smartwizard\.github\pull_request_template.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CaseProject.Business\CaseProject.Business.csproj" />
+    <ProjectReference Include="..\CaseProject.Data\CaseProject.Data.csproj" />
+    <ProjectReference Include="..\CaseProject.Entity\CaseProject.Entity.csproj" />
+    <ProjectReference Include="..\Core\CaseProject.Core.csproj" />
+  </ItemGroup>
+
+</Project>
