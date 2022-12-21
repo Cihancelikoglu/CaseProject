@@ -4,25 +4,25 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CaseProject.MVC.Controllers
 {
-	public class CategoryController : Controller
-	{
-		private readonly ICategoryService _categoryService;
-		public CategoryController(ICategoryService categoryService)
-		{
-			_categoryService = categoryService;
-		}
-		
-		public async Task<IActionResult> Index()
-		{
+    public class CategoryController : Controller
+    {
+        private readonly ICategoryService _categoryService;
+        public CategoryController(ICategoryService categoryService)
+        {
+            _categoryService = categoryService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
             var result = await _categoryService.GetAllAsync();
-			ViewBag.categories = result.Data;
+            ViewBag.categories = result.Data;
 
             return View(result.Data);
-		}
+        }
 
         public async Task<IActionResult> CategoryAdd()
         {
-			return View();
+            return View();
         }
 
         [HttpPost]
@@ -53,6 +53,25 @@ namespace CaseProject.MVC.Controllers
             return BadRequest(result);
         }
 
+        public async Task<IActionResult> CategoryDelete(int id)
+        {
+            var result = await _categoryService.DeleteAsync(id);
+            if (result.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+            return BadRequest(result);
+        }
 
+        public async Task<IActionResult> IsStatus(int id)
+        {
+            var result = await _categoryService.IsStatus(id);
+            
+            if (result.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+            return BadRequest(result);
+        }
     }
 }

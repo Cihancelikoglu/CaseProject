@@ -23,20 +23,20 @@ namespace CaseProject.Core.DataAccess.Dapper
                 .GetDbContext(_dbSettings.ConnectionString);
         }
 
-        public async Task<List<TEntity>> FindAllAsync()
-        {
-            DbConnection.Open();
+        //public async Task<List<TEntity>> FindAllAsync()
+        //{
+        //    DbConnection.Open();
 
-            try
-            {
-                var results = await DbConnection
-                    .GetAllAsync<TEntity>();
+        //    try
+        //    {
+        //        var results = await DbConnection
+        //            .GetAllAsync<TEntity>();
 
-                return results
-                    .ToList();
-            }
-            finally { DbConnection.Close(); }
-        }
+        //        return results
+        //            .ToList();
+        //    }
+        //    finally { DbConnection.Close(); }
+        //}
 
         public async Task<TEntity> FindByIdAsync(int id)
         {
@@ -93,6 +93,19 @@ namespace CaseProject.Core.DataAccess.Dapper
 
                 return await DbConnection
                     .DeleteAsync<TEntity>(entity);
+            }
+            finally { DbConnection.Close(); }
+        }
+
+        public async Task<List<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> filter = null)
+        {
+            DbConnection.Open();
+
+            try
+            {
+                var data = await DbConnection.GetAllAsync<TEntity>();
+                var results = data.AsQueryable().Where(filter).ToList();
+                return results;
             }
             finally { DbConnection.Close(); }
         }

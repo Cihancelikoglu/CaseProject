@@ -2,6 +2,7 @@
 using CaseProject.Business.Constants;
 using CaseProject.Core.Utilities.Result;
 using CaseProject.Data.Abstract;
+using CaseProject.Data.Concrete;
 using CaseProject.Entity.Entities;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,21 @@ namespace CaseProject.Business.Concrete
         {
             await _productDal.UpdateAsync(product);
             return new Result(true, Messages.ProductUpdated);
+        }
+
+        public async Task<IResult> IsStatus(int id)
+        {
+            var response = await _productDal.FindByIdAsync(id);
+            if (response.Status == true)
+            {
+                response.Status = false;
+            }
+            else
+            {
+                response.Status = true;
+            }
+            await _productDal.UpdateAsync(response);
+            return new Result(true, "Başarılı");
         }
     }
 }

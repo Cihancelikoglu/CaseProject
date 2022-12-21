@@ -1,9 +1,14 @@
-﻿<div class="row">
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Kategoriler</h4>
-                <a class="btn btn-primary" asp-controller="Category" asp-action="CategoryAdd">Kategori Ekle</a>
+                <h4 class="card-title">Ürünler</h4>
+                <a class="btn btn-primary" asp-controller="Products" asp-action="ProductAdd">Ürün Ekle</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -11,32 +16,38 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Kategori İsmi</th>
-                                <th>Durumu</th>
+                                <th>Ürün Başlık</th>
+                                <th>Kategori</th>
+                                <th>Price</th>
+                                <th>Date</th>
+                                <th>Durum</th>
                                 <th>İşlemler</th>
                             </tr>
                         </thead>
                         <tbody>
                             @{
-                                foreach (var item in ViewBag.categories)
+                                foreach (var item in ViewBag.product)
                                 {
                                     <tr>
                                         <td>@item.Id</td>
-                                        <td>@item.CategoryName</td>
+                                        <td>@item.ProductName</td>
+                                        <td>@item.CategoryId</td>
+                                        <td>@item.Price</td>
+                                        <td>@item.Date</td>
                                         <td>
                                             @if (@item.Status == true)
                                             {
-                                                <a href="/Category/IsStatus/@item.Id" class="badge badge-rounded badge-success">Aktif</a>
+                                                <a href="/Products/IsStatus/@item.Id" class="badge badge-rounded badge-success">Aktif</a>
                                             }
                                             else
                                             {
-                                                <a href="/Category/IsStatus/@item.Id" class="badge badge-rounded badge-danger">Pasif</a>
+                                                <a href="/Products/IsStatus/@item.Id" class="badge badge-rounded badge-danger">Pasif</a>
                                             }
                                         </td>
                                         <td>
                                             <div class="d-flex">
-                                                <a href="/Category/CategoryUpdate/@item.Id" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
-                                                <a href="/Category/CategoryDelete/@item.Id" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                                <a href="/Products/ProductUpdate/@item.Id" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+                                                <a href="/Products/ProductDelete/@item.Id" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
                                             </div>
                                         </td>
                                     </tr>

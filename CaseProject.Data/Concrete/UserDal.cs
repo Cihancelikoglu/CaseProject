@@ -1,7 +1,6 @@
 ﻿using CaseProject.Core.DataAccess.Dapper;
 using CaseProject.Core.DataAccess.Dapper.Context;
 using CaseProject.Data.Abstract;
-using CaseProject.Entity.Dto;
 using CaseProject.Entity.Entities;
 using Dapper;
 using System;
@@ -13,14 +12,9 @@ using System.Threading.Tasks;
 
 namespace CaseProject.Data.Concrete
 {
-    public class ProductDal : Repository<Product>, IProductDal
+    public class UserDal : Repository<User>, IUserDal
     {
-        public ProductDal(DatabaseSettings dbSettings)
+        public UserDal(DatabaseSettings dbSettings)
             : base(dbSettings) { }
-
-        public Task<List<ProductDetailDto>> GetProductDetails()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

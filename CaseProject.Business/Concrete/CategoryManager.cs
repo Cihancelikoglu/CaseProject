@@ -47,5 +47,20 @@ namespace CaseProject.Business.Concrete
             await _categoryDal.UpdateAsync(category);
             return new Result(true, "Güncelleme Başarılı");
         }
+
+        public async Task<IResult> IsStatus(int id)
+        {
+            var response = await _categoryDal.FindByIdAsync(id);
+            if (response.Status == true)
+            {
+                response.Status = false;
+            }
+            else
+            {
+                response.Status = true;
+            }
+            await _categoryDal.UpdateAsync(response);
+            return new Result(true, "Başarılı");
+        }
     }
 }

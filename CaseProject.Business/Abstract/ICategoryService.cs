@@ -15,5 +15,6 @@ namespace CaseProject.Business.Abstract
         Task<IResult> AddAsync(Category category);
         Task<IResult> UpdateAsync(Category category);
         Task<IResult> DeleteAsync(int id);
+        Task<IResult> IsStatus(int id);
     }
 }

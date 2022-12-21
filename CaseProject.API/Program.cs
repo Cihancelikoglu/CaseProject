@@ -3,6 +3,7 @@ using CaseProject.Business.Concrete;
 using CaseProject.Core.DataAccess.Dapper.Context;
 using CaseProject.Data.Abstract;
 using CaseProject.Data.Concrete;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,8 @@ builder.Services.AddSingleton<ICategoryDal, CategoryDal>();
 builder.Services.AddSingleton<ICategoryService, CategoryManager>();
 builder.Services.AddSingleton<IProductDal, ProductDal>();
 builder.Services.AddSingleton<IProductService, ProductManager>();
+builder.Services.AddSingleton<IUserDal, UserDal>();
+builder.Services.AddSingleton<IAuthService, AuthManager>();
 
 var app = builder.Build();
 
