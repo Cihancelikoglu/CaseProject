@@ -1,12 +1,16 @@
 ﻿using CaseProject.Business.Abstract;
 using CaseProject.Entity.Dto;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Common;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace CaseProject.MVC.Controllers
 {
+    [AllowAnonymous]
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
@@ -20,7 +24,6 @@ namespace CaseProject.MVC.Controllers
             return View();
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
@@ -31,11 +34,12 @@ namespace CaseProject.MVC.Controllers
                 return View();
             }
             //var token = new JwtSecurityToken(jwtEncodedString: idtoken);
-           
+
             var result = await _authService.CreateAccessToken(userToLogin.Data);
             if (result.IsSuccess)
             {
                 HttpContext.Session.SetString("Token", result.Data.Token);
+                Response.Cookies.Append("JwtToken", result.Data.Token);
                 return RedirectToAction("Index", "Home");
                 //return Ok(result);
             }
@@ -43,7 +47,6 @@ namespace CaseProject.MVC.Controllers
             return BadRequest(result.Message);
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
@@ -61,6 +64,12 @@ namespace CaseProject.MVC.Controllers
             }
 
             return BadRequest(registerResult.Message);
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            HttpContext.Response.Cookies.Delete(".AspNetCore.Session");
+            return RedirectToAction("Login", "Auth");
         }
     }
 }

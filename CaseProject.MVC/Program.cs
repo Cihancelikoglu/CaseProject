@@ -6,6 +6,8 @@ using CaseProject.Core.Utilities.Security.JWT;
 using CaseProject.Data.Abstract;
 using CaseProject.Data.Concrete;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using System.Text;
@@ -38,7 +40,6 @@ builder.Services.AddSession(options =>
 
 var tokenOptions = configuration.GetSection("TokenOptions").Get<CaseProject.Core.Utilities.Security.JWT.TokenOptions>();
 
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -62,6 +63,15 @@ builder.Services.AddAuthentication(options =>
         options.ExpireTimeSpan = TimeSpan.FromDays(5);
     });
 
+builder.Services.AddMvc(config =>
+{
+    var policy = new AuthorizationPolicyBuilder()
+    .RequireAuthenticatedUser()
+    .Build();
+    config.Filters.Add(new AuthorizeFilter(policy));
+});
+
+builder.Services.AddMvc();
 
 var app = builder.Build();
 
@@ -72,6 +82,9 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseStatusCodePagesWithReExecute("/Auth/Login");
+app.UseExceptionHandler("/Auth/Login");
 
 app.UseSession();
 
