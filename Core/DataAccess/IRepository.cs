@@ -14,5 +14,7 @@ namespace CaseProject.Core.DataAccess
         Task<bool> CreateAsync(TEntity entity);
         Task<bool> UpdateAsync(TEntity entity);
         Task<bool> DeleteAsync(int id);
+        Task<List<TEntity>> GetFilterAll(Expression<Func<TEntity, bool>> filter);
+        Task<TEntity> GetFilter(Expression<Func<TEntity, bool>> filter);
     }
 }

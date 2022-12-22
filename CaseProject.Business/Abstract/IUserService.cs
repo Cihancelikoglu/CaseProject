@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace CaseProject.Business.Abstract
 {
-    public interface IAuthService
+    public interface IUserService
     {
-        Task<IResult> UserExists(string email);
-        Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto, string password);
-        Task<IDataResult<User>> Login(UserForLoginDto userForLoginDto);
+        Task<IResult> AddAsync(User user);
+
+        Task<User> GetByMail(string email);
     }
 }

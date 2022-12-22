@@ -97,5 +97,29 @@ namespace CaseProject.Core.DataAccess.Dapper
             finally { DbConnection.Close(); }
         }
 
+        public async Task<TEntity> GetFilter(Expression<Func<TEntity, bool>> filter)
+        {
+            DbConnection.Open();
+            try
+            {
+                var data = await DbConnection.GetAllAsync<TEntity>();
+                var results = data.AsQueryable().SingleOrDefault(filter);
+                return results;
+            }
+            finally { DbConnection.Close(); }
+        }
+        public async Task<List<TEntity>> GetFilterAll(Expression<Func<TEntity, bool>> filter)
+        {
+            DbConnection.Open();
+
+            try
+            {
+                var data = await DbConnection.GetAllAsync<TEntity>();
+                var results = data.AsQueryable().Where(filter).ToList();
+                return results;
+            }
+            finally { DbConnection.Close(); }
+        }
+
     }
 }

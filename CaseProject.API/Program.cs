@@ -22,6 +22,7 @@ builder.Services.AddSingleton<ICategoryService, CategoryManager>();
 builder.Services.AddSingleton<IProductDal, ProductDal>();
 builder.Services.AddSingleton<IProductService, ProductManager>();
 builder.Services.AddSingleton<IUserDal, UserDal>();
+builder.Services.AddSingleton<IUserService, UserManager>();
 builder.Services.AddSingleton<IAuthService, AuthManager>();
 
 var app = builder.Build();
