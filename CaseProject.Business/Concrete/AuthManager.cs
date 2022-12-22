@@ -2,6 +2,7 @@
 using CaseProject.Business.Constants;
 using CaseProject.Core.Utilities.Result;
 using CaseProject.Core.Utilities.Security.Hashing;
+using CaseProject.Core.Utilities.Security.JWT;
 using CaseProject.Data.Abstract;
 using CaseProject.Data.Concrete;
 using CaseProject.Entity.Dto;
@@ -16,12 +17,15 @@ namespace CaseProject.Business.Concrete
 {
     public class AuthManager : IAuthService
     {
-        IUserService _userService;
+        private IUserService _userService;
+        private ITokenHelper _tokenHelper;
 
-        public AuthManager(IUserService userService)
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper)
         {
             _userService = userService;
+            _tokenHelper = tokenHelper;
         }
+
 
         public async Task<IDataResult<User>> Login(UserForLoginDto userForLoginDto)
         {
@@ -65,6 +69,13 @@ namespace CaseProject.Business.Concrete
                 return new ErrorResult("Kullanıcı Mevcut");
             }
             return new SuccessResult();
+        }
+
+        public async Task<IDataResult<AccessToken>> CreateAccessToken(User user)
+        {
+            var claims = await _userService.GetClaims(user);
+            var accessToken = await _tokenHelper.CreateToken(user, claims);
+            return new SuccessDataResult<AccessToken>(accessToken, "Token Oluşturuldu");
         }
     }
 }

@@ -1,6 +1,7 @@
 using CaseProject.Business.Abstract;
 using CaseProject.Business.Concrete;
 using CaseProject.Core.DataAccess.Dapper.Context;
+using CaseProject.Core.Utilities.Security.JWT;
 using CaseProject.Data.Abstract;
 using CaseProject.Data.Concrete;
 using Microsoft.AspNetCore.Identity;
@@ -22,8 +23,10 @@ builder.Services.AddSingleton<ICategoryService, CategoryManager>();
 builder.Services.AddSingleton<IProductDal, ProductDal>();
 builder.Services.AddSingleton<IProductService, ProductManager>();
 builder.Services.AddSingleton<IUserDal, UserDal>();
-builder.Services.AddSingleton<IUserService, UserManager>();
 builder.Services.AddSingleton<IAuthService, AuthManager>();
+builder.Services.AddSingleton<IUserService, UserManager>();
+builder.Services.AddSingleton<ITokenHelper, JwtHelper>();
+
 
 var app = builder.Build();
 

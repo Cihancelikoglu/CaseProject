@@ -1,4 +1,5 @@
 ﻿using CaseProject.Core.Utilities.Result;
+using CaseProject.Core.Utilities.Security.JWT;
 using CaseProject.Entity.Dto;
 using CaseProject.Entity.Entities;
 using System;
@@ -14,5 +15,6 @@ namespace CaseProject.Business.Abstract
         Task<IResult> UserExists(string email);
         Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto, string password);
         Task<IDataResult<User>> Login(UserForLoginDto userForLoginDto);
+        Task<IDataResult<AccessToken>> CreateAccessToken(User user);
     }
 }

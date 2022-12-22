@@ -26,14 +26,13 @@ namespace CaseProject.API.Controllers
             {
                 return BadRequest(userToLogin.Message);
             }
-            return Ok(userToLogin);
-            //var result = _authService.CreateAccessToken(userToLogin.Data);
-            //if (userToLogin.IsSuccess)
-            //{
-            //    return Ok(result);
-            //}
+            var result = await _authService.CreateAccessToken(userToLogin.Data);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
 
-            //return BadRequest(result.Message);
+            return BadRequest(result.Message);
         }
 
         [HttpPost("register")]
@@ -46,7 +45,7 @@ namespace CaseProject.API.Controllers
             }
 
             var registerResult = await _authService.Register(userForRegisterDto, userForRegisterDto.Password);
-            //var result = _authService.CreateAccessToken(registerResult.Data);
+            var result = _authService.CreateAccessToken(registerResult.Data);
             if (registerResult.IsSuccess)
             {
                 return Ok(registerResult.Data);

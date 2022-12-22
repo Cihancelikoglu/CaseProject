@@ -1,4 +1,5 @@
 ﻿using CaseProject.Business.Abstract;
+using CaseProject.Core.Entities.Concrete;
 using CaseProject.Core.Utilities.Result;
 using CaseProject.Data.Abstract;
 using CaseProject.Entity.Entities;
@@ -28,6 +29,11 @@ namespace CaseProject.Business.Concrete
         public async Task<User> GetByMail(string email)
         {
             return await _userDal.GetFilter(u => u.Email == email);
+        }
+
+        public async Task<List<OperationClaim>> GetClaims(User user)
+        {
+            return await _userDal.GetClaims(user);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using CaseProject.Core.Utilities.Result;
+﻿using CaseProject.Core.Entities.Concrete;
+using CaseProject.Core.Utilities.Result;
 using CaseProject.Entity.Dto;
 using CaseProject.Entity.Entities;
 using System;
@@ -11,6 +12,7 @@ namespace CaseProject.Business.Abstract
 {
     public interface IUserService
     {
+        Task<List<OperationClaim>> GetClaims(User user);
         Task<IResult> AddAsync(User user);
 
         Task<User> GetByMail(string email);
