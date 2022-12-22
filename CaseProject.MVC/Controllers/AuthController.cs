@@ -1,15 +1,10 @@
 ﻿using CaseProject.Business.Abstract;
-using CaseProject.Core.Utilities.Result;
-using CaseProject.Data.Abstract;
 using CaseProject.Entity.Dto;
-using CaseProject.Entity.Entities;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CaseProject.API.Controllers
+namespace CaseProject.MVC.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : Controller
     {
         private readonly IAuthService _authService;
         public AuthController(IAuthService authService)
@@ -17,16 +12,21 @@ namespace CaseProject.API.Controllers
             _authService = authService;
         }
 
+        public async Task<IActionResult> Login()
+        {
+            return View();
+        }
 
-        [HttpGet("login")]
+        [HttpPost]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
             var userToLogin = await _authService.Login(userForLoginDto);
             if (!userToLogin.IsSuccess)
             {
-                return BadRequest(userToLogin.Message);
+                ViewBag.message = userToLogin.Message;
+                return View();
             }
-            return Ok(userToLogin);
+            return RedirectToAction("Index", "Home");
             //var result = _authService.CreateAccessToken(userToLogin.Data);
             //if (userToLogin.IsSuccess)
             //{
@@ -36,7 +36,7 @@ namespace CaseProject.API.Controllers
             //return BadRequest(result.Message);
         }
 
-        [HttpPost("register")]
+        [HttpPost]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
             var userExists = await _authService.UserExists(userForRegisterDto.Email);

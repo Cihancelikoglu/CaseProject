@@ -23,9 +23,20 @@ namespace CaseProject.Business.Concrete
             _userService = userService;
         }
 
-        public Task<IDataResult<User>> Login(UserForLoginDto userForLoginDto)
+        public async Task<IDataResult<User>> Login(UserForLoginDto userForLoginDto)
         {
-            throw new NotImplementedException();
+            var userToCheck = await _userService.GetByMail(userForLoginDto.Email);
+            if (userToCheck == null)
+            {
+                return new ErrorDataResult<User>("Kullanıcı Bulunamadı");
+            }
+
+            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
+            {
+                return new ErrorDataResult<User>("Şifre Hatalı");
+            }
+
+            return new SuccessDataResult<User>(userToCheck, "Giriş Başarılı");
         }
 
         public async Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto, string password)
@@ -41,7 +52,7 @@ namespace CaseProject.Business.Concrete
                 PasswordSalt = passwordSalt,
                 Status = true
             };
-            _userService.AddAsync(user);
+            await _userService.AddAsync(user);
             return new SuccessDataResult<User>(user, "Kullanıcı Kayıt Başarılı");
         }
 
@@ -55,41 +66,5 @@ namespace CaseProject.Business.Concrete
             }
             return new SuccessResult();
         }
-
-
-
-
-        //public async Task<IDataResult<User>> GetByIdAsync(int id)
-        //{
-        //    var response = await _userDal.FindByIdAsync(id);
-        //    return new SuccessDataResult<User>(response, "Listelendi");
-        //}
-
-        //public async Task<IDataResult<User>> Login(string mail, string password)
-        //{
-        //    var userCheck = await _userDal.GetFilter(x => x.Email == mail && x.Password == password);
-        //    if (userCheck == null)
-        //    {
-        //        return new ErrorDataResult<User>("Kullanıcı Adı veya Şifre Hatalı");
-        //    }
-        //    return new SuccessDataResult<User>(userCheck, "Giriş Başarılı");
-        //}
-
-        //public async Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto, string password)
-        //{
-        //    byte[] passwordHash, passwordSalt;
-        //    HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
-        //    var user = new User
-        //    {
-        //        Email = userForRegisterDto.Email,
-        //        Name = userForRegisterDto.Name,
-        //        Surname = userForRegisterDto.Surname,
-        //        PasswordHash = passwordHash,
-        //        PasswordSalt = passwordSalt,
-        //        Status = true
-        //    };
-        //    _userDal.CreateAsync(user);
-        //    return await new SuccessDataResult<User>(user, "Kullanıcı Başarıyla Kayıt Edildi");
-        //}
     }
 }
