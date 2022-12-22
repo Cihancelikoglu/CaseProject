@@ -1,9 +1,11 @@
 ﻿using CaseProject.Business.Abstract;
 using CaseProject.Entity.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CaseProject.MVC.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly IProductService _productService;

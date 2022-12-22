@@ -1,6 +1,9 @@
 ﻿using CaseProject.Business.Abstract;
 using CaseProject.Entity.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Common;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace CaseProject.MVC.Controllers
 {
@@ -17,6 +20,7 @@ namespace CaseProject.MVC.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
@@ -26,16 +30,20 @@ namespace CaseProject.MVC.Controllers
                 ViewBag.message = userToLogin.Message;
                 return View();
             }
-            return RedirectToAction("Index", "Home");
-            //var result = _authService.CreateAccessToken(userToLogin.Data);
-            //if (userToLogin.IsSuccess)
-            //{
-            //    return Ok(result);
-            //}
+            //var token = new JwtSecurityToken(jwtEncodedString: idtoken);
+           
+            var result = await _authService.CreateAccessToken(userToLogin.Data);
+            if (result.IsSuccess)
+            {
+                HttpContext.Session.SetString("Token", result.Data.Token);
+                return RedirectToAction("Index", "Home");
+                //return Ok(result);
+            }
 
-            //return BadRequest(result.Message);
+            return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
@@ -46,7 +54,7 @@ namespace CaseProject.MVC.Controllers
             }
 
             var registerResult = await _authService.Register(userForRegisterDto, userForRegisterDto.Password);
-            //var result = _authService.CreateAccessToken(registerResult.Data);
+            var result = _authService.CreateAccessToken(registerResult.Data);
             if (registerResult.IsSuccess)
             {
                 return Ok(registerResult.Data);

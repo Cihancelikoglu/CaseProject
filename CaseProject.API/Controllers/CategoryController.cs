@@ -1,10 +1,12 @@
 ﻿using CaseProject.Business.Abstract;
 using CaseProject.Data.Abstract;
 using CaseProject.Entity.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CaseProject.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase

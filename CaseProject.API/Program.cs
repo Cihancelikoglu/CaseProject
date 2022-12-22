@@ -1,11 +1,15 @@
 using CaseProject.Business.Abstract;
 using CaseProject.Business.Concrete;
 using CaseProject.Core.DataAccess.Dapper.Context;
+using CaseProject.Core.Utilities.Security.Encryption;
 using CaseProject.Core.Utilities.Security.JWT;
 using CaseProject.Data.Abstract;
 using CaseProject.Data.Concrete;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,11 +32,37 @@ builder.Services.AddSingleton<IUserService, UserManager>();
 builder.Services.AddSingleton<ITokenHelper, JwtHelper>();
 
 
+var tokenOptions = configuration.GetSection("TokenOptions").Get<CaseProject.Core.Utilities.Security.JWT.TokenOptions>();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(o =>
+{
+    o.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidIssuer = tokenOptions.Issuer,
+        ValidAudience = tokenOptions.Audience,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+    };
+});
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

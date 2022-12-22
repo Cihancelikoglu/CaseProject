@@ -1,9 +1,11 @@
 ﻿using CaseProject.Business.Abstract;
 using CaseProject.Entity.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CaseProject.MVC.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
