@@ -13,9 +13,19 @@ namespace CaseProject.MVC.Controllers
             _categoryService = categoryService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var result = await _productService.GetAllAsync();
+            ViewBag.product = result.Data;
+
+            return View(result.Data);
+        }
+
+        public async Task<IActionResult> Detail(int id)
+        {
+            var result = await _productService.GetByIdAsync(id);
+            ViewBag.category = await _categoryService.GetByIdAsync(result.Data.Id);
+            return View(result.Data);
         }
     }
 }
