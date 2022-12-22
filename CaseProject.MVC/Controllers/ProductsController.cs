@@ -32,11 +32,11 @@ namespace CaseProject.MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ProductAdd(Product product)
+        public async Task<IActionResult> ProductAdd([FromForm] IFormFile file, [FromForm] Product product)
         {
-            var result = await _productService.AddAsync(product);
+            var result = await _productService.AddAsync(file, product);
             if (result.IsSuccess)
-            {
+            {   
                 return RedirectToAction("Index");
             }
             return BadRequest(result);
@@ -51,9 +51,9 @@ namespace CaseProject.MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ProductUpdate(Product product)
+        public async Task<IActionResult> ProductUpdate([FromForm] IFormFile file, [FromForm] Product product)
         {
-            var result = await _productService.UpdateAsync(product);
+            var result = await _productService.UpdateAsync(file, product);
             if (result.IsSuccess)
             {
                 return RedirectToAction("Index");

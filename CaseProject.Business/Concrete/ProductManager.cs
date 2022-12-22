@@ -1,9 +1,12 @@
 ﻿using CaseProject.Business.Abstract;
 using CaseProject.Business.Constants;
+using CaseProject.Core.Utilities.Helpers.FileHelper.Abstract;
+using CaseProject.Core.Utilities.Helpers.FileHelper.Concrete;
 using CaseProject.Core.Utilities.Result;
 using CaseProject.Data.Abstract;
 using CaseProject.Data.Concrete;
 using CaseProject.Entity.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +18,11 @@ namespace CaseProject.Business.Concrete
     public class ProductManager : IProductService
     {
         IProductDal _productDal;
-        public ProductManager(IProductDal productDal)
+        IFileHelper _fileHelper;
+        public ProductManager(IProductDal productDal, IFileHelper fileHelper)
         {
             _productDal = productDal;
+            _fileHelper = fileHelper;
         }
 
         public async Task<IDataResult<List<Product>>> GetAllAsync()
@@ -32,8 +37,9 @@ namespace CaseProject.Business.Concrete
             return new SuccessDataResult<Product>(response, Messages.ProductListed);
         }
 
-        public async Task<IResult> AddAsync(Product product)
+        public async Task<IResult> AddAsync(IFormFile file, Product product)
         {
+            product.Image = await _fileHelper.Upload(file, PathConstants.pathSeparator);
             await _productDal.CreateAsync(product);
             return new Result(true, Messages.ProductAdded);
         }
@@ -44,8 +50,12 @@ namespace CaseProject.Business.Concrete
             return new Result(true, Messages.ProductDeleted);
         }
 
-        public async Task<IResult> UpdateAsync(Product product)
+        public async Task<IResult> UpdateAsync(IFormFile file, Product product)
         {
+            if (file != null)
+            {
+                product.Image = await _fileHelper.Update(file, PathConstants.pathSeparator + product.Image, PathConstants.pathSeparator);
+            }
             await _productDal.UpdateAsync(product);
             return new Result(true, Messages.ProductUpdated);
         }

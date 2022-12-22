@@ -38,9 +38,9 @@ namespace CaseProject.API.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> Add(Product product)
+        public async Task<IActionResult> Add([FromForm] IFormFile file, [FromForm] Product product)
         {
-            var result = await _productService.AddAsync(product);
+            var result = await _productService.AddAsync(file, product);
             if (result.IsSuccess)
             {
                 return Ok(result);
@@ -60,9 +60,9 @@ namespace CaseProject.API.Controllers
         }
 
         [HttpPost("Update")]
-        public async Task<IActionResult> Update(Product product)
+        public async Task<IActionResult> Update([FromForm] IFormFile file, [FromForm] Product product)
         {
-            var result = await _productService.UpdateAsync(product);
+            var result = await _productService.UpdateAsync(file, product);
             if (result.IsSuccess)
             {
                 return Ok(result);

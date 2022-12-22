@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "ProductAdd";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -10,14 +9,14 @@
         </div>
         <div class="card-body">
             <div class="basic-form">
-                <form asp-controller="Products" asp-action="ProductAdd" method="post">
+                <form asp-controller="Products" asp-action="ProductAdd" enctype="multipart/form-data" method="post">
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Ürün Adı</label>
                         <div class="col-sm-9">
                             <input type="text" name="ProductName" class="form-control" placeholder="Ürün Adı">
                         </div>
                     </div>
-                     <div class="form-group row">
+                    <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Kategori Seçiniz</label>
                         <div class="col-sm-9">
                             <select class="form-control default-select" name="CategoryId">
@@ -29,7 +28,7 @@
                             </select>
                         </div>
                     </div>
-                     <div class="form-group row">
+                    <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Ürün Fiyatı</label>
                         <div class="col-sm-9">
                             <input type="text" name="Price" class="form-control" placeholder="Ürün Fiyatı">
@@ -47,6 +46,19 @@
                             <input type="datetime-local" name="Date" class="form-control" placeholder="Tarih">
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Tarih</label>
+                        <div class="input-group mb-3 col-sm-9">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Upload</span>
+                            </div>
+                            <div class="custom-file">
+                                <input name="Image" type="file" class="custom-file-input">
+                                <label class="custom-file-label">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Durumu</label>
                         <div class="col-sm-9 pl-5">

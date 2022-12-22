@@ -1,6 +1,8 @@
 using CaseProject.Business.Abstract;
 using CaseProject.Business.Concrete;
 using CaseProject.Core.DataAccess.Dapper.Context;
+using CaseProject.Core.Utilities.Helpers.FileHelper.Abstract;
+using CaseProject.Core.Utilities.Helpers.FileHelper.Concrete;
 using CaseProject.Core.Utilities.Security.Encryption;
 using CaseProject.Core.Utilities.Security.JWT;
 using CaseProject.Data.Abstract;
@@ -30,6 +32,7 @@ builder.Services.AddSingleton<IUserDal, UserDal>();
 builder.Services.AddSingleton<IAuthService, AuthManager>();
 builder.Services.AddSingleton<IUserService, UserManager>();
 builder.Services.AddSingleton<ITokenHelper, JwtHelper>();
+builder.Services.AddSingleton<IFileHelper, FileHelper>();
 
 
 builder.Services.AddDistributedMemoryCache();
