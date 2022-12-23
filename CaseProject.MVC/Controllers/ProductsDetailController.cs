@@ -24,7 +24,8 @@ namespace CaseProject.MVC.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             var result = await _productService.GetByIdAsync(id);
-            ViewBag.category = await _categoryService.GetByIdAsync(result.Data.Id);
+            var category = await _categoryService.GetByIdAsync(result.Data.CategoryId);
+            ViewBag.category = category.Data.CategoryName;
             return View(result.Data);
         }
     }
