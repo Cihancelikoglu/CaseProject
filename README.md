@@ -1,6 +1,6 @@
 # CaseProject
 
-Bu proje aşağıdaki özellikler ile geliştirilmiştir.
+<h4>Bu proje aşağıdaki özellikler ile geliştirilmiştir.</h4>
 
 <p>.Net Core 6</p>
 <p>ORM Dapper</p>
@@ -10,6 +10,8 @@ Bu proje aşağıdaki özellikler ile geliştirilmiştir.
 <p>Dependency injection</p>
 <p>JWT</p>
 <p>Database MSSQL</p>
+
+<h4>Proje içerisinde yapılanlar</h4>
 
 <p>Proje .Net Core 6 ile geliştirilmiştir.</p>
 <p>Kullanıcı giriş yapısı için JWT kullanılmıştır. kullanıcı bilgileri asp.session olarak tutulmaktadır.</p>
