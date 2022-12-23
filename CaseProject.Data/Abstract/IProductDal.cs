@@ -7,6 +7,5 @@ namespace CaseProject.Data.Abstract
 {
     public interface IProductDal : IRepository<Product>
     {
-        Task<List<ProductDetailDto>> GetProductDetails();
     }
 }

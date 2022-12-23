@@ -17,10 +17,5 @@ namespace CaseProject.Data.Concrete
     {
         public ProductDal(DatabaseSettings dbSettings)
             : base(dbSettings) { }
-
-        public Task<List<ProductDetailDto>> GetProductDetails()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
