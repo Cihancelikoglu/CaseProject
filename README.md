@@ -11,6 +11,8 @@
 <p>JWT</p>
 <p>Database MSSQL</p>
 
+----------------------------------------------------------------------------------------------
+
 <h4>Proje içerisinde yapılanlar</h4>
 
 <p>Proje .Net Core 6 ile geliştirilmiştir.</p>
