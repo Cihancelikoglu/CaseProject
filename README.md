@@ -8,15 +8,6 @@
 <p>Core > Entities > DataAccess > Business > Mvc UI --> Ek olarak Web API</p>
 <p>Geri dönüş değerleri için result altyapısı kullanılmıştır.</p>
 <p>Dependency injection</p>
-<p>JWT</p>
+<p>Login ve register işlemleri için JWT</p>
 <p>Database MSSQL</p>
-
-----------------------------------------------------------------------------------------------
-
-<h4>Proje İçerisinde Yapılanlar</h4>
-
-<p>Proje .Net Core 6 ile geliştirilmiştir.</p>
-<p>Kullanıcı giriş yapısı için JWT kullanılmıştır. kullanıcı bilgileri asp.session olarak tutulmaktadır.</p>
-<p>Kategorilerin tablo halinde gösterilmesi için sayfa tasarımı yapıldı ve bu sayfa üzerindne add, update, delete işlemleriin yapılmasına imkan sağlandı.</p>
-<p>Ürünlerin tablo halinde gösterilmesi için sayfa tasarımı yapıldı ve bu sayfa üzerindne add, update, delete işlemlerin yapılmasına imkan sağlandı.</p>
-<p>Ürün listeleme sayfasında tüm kategorilere ait ürünler listelendi ve ürünlerin kandilerine ait detay sayfalarina yönlendirme yapıldı.</p>
+<p>Tüm işlemler için CRUD operasyonları yapıldı</p>
